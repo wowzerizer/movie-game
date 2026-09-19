@@ -1,4 +1,4 @@
-const CACHE_NAME = "movie-connect-v1";
+const CACHE_NAME = "movie-connect-v2";
 const ASSETS = [
   "./",
   "index.html",
@@ -31,18 +31,18 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
+  // Network-first: whenever online, visitors get whatever was last pushed
+  // (e.g. an updated actor list) instead of a stale cached copy. Cache is
+  // only used as an offline fallback.
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request)
-        .then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+    fetch(event.request)
+      .then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });

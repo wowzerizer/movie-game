@@ -1,14 +1,15 @@
 :root {
-  --bg-1: #0b0d1a;
-  --bg-2: #161129;
-  --panel: rgba(255, 255, 255, 0.06);
-  --panel-border: rgba(255, 255, 255, 0.14);
-  --text: #f5f6ff;
-  --muted: #9aa0c3;
-  --neon-pink: #ff2e63;
-  --neon-cyan: #00e5ff;
-  --neon-gold: #ffd166;
-  --gradient-main: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+  --bg-1: #000000;
+  --bg-2: #1a1a1a;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(212, 175, 116, 0.22);
+  --text: #f5f5f2;
+  --muted: #a3a3a8;
+  --gold: #e5c158;
+  --gold-dark: #a8842f;
+  --silver: #d9dbe3;
+  --silver-dark: #9a9dab;
+  --gradient-main: linear-gradient(135deg, var(--gold), var(--silver));
   --card-radius: 24px;
   --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -41,14 +42,14 @@ body {
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.35;
+  filter: blur(70px);
+  opacity: 0.22;
 }
 
 .orb-a {
   width: 280px;
   height: 280px;
-  background: var(--neon-pink);
+  background: var(--gold);
   top: -80px;
   left: -60px;
   animation: drift-a 18s ease-in-out infinite;
@@ -57,7 +58,7 @@ body {
 .orb-b {
   width: 320px;
   height: 320px;
-  background: var(--neon-cyan);
+  background: var(--silver);
   bottom: -100px;
   right: -80px;
   animation: drift-b 22s ease-in-out infinite;
@@ -66,7 +67,7 @@ body {
 .orb-c {
   width: 200px;
   height: 200px;
-  background: var(--neon-gold);
+  background: var(--gold);
   top: 40%;
   left: 60%;
   animation: drift-c 26s ease-in-out infinite;
@@ -107,7 +108,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(90deg, var(--neon-gold), var(--neon-pink), var(--neon-cyan), var(--neon-gold));
+  background: linear-gradient(90deg, var(--gold), var(--silver), var(--gold));
   background-size: 300% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -204,13 +205,7 @@ main {
   min-width: 0;
 }
 
-/* The ring keeps its continuous spin (from .avatar-ring) *and* plays the
-   one-off reveal pop by listing both animations together - a single
-   `animation` declaration replaces rather than merges with the base one. */
-.actor-slot.reveal .avatar-ring {
-  animation: ring-spin 5s linear infinite, slot-reveal 0.5s var(--ease-pop) both;
-}
-
+.actor-slot.reveal .avatar-ring,
 .actor-slot.reveal .actor {
   animation: slot-reveal 0.5s var(--ease-pop) both;
 }
@@ -231,12 +226,7 @@ main {
   border-radius: 50%;
   padding: 3px;
   flex-shrink: 0;
-  background: conic-gradient(from 0deg, var(--neon-pink), var(--neon-cyan), var(--neon-gold), var(--neon-pink));
-  animation: ring-spin 5s linear infinite;
-}
-
-@keyframes ring-spin {
-  to { transform: rotate(360deg); }
+  background: linear-gradient(135deg, var(--gold), var(--silver));
 }
 
 .avatar {
@@ -290,7 +280,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 18px rgba(255, 46, 99, 0.55), 0 0 18px rgba(0, 229, 255, 0.35);
+  box-shadow: 0 0 18px rgba(229, 193, 88, 0.5), 0 0 18px rgba(217, 219, 227, 0.3);
   animation: badge-pulse 2.4s ease-in-out infinite;
 }
 
@@ -313,7 +303,7 @@ main {
 .vs-text {
   font-size: 0.75rem;
   font-weight: 800;
-  color: #0b0d1a;
+  color: #000;
   letter-spacing: 0.03em;
 }
 
@@ -324,7 +314,7 @@ main {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--neon-gold);
+  background: var(--gold);
   pointer-events: none;
   animation: spark-fly 0.6s ease-out forwards;
 }
@@ -345,7 +335,7 @@ main {
   overflow: hidden;
   background: var(--gradient-main);
   background-size: 200% auto;
-  color: #0b0d1a;
+  color: #000;
   border: none;
   border-radius: 999px;
   padding: 15px 34px;
@@ -355,13 +345,13 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 10px 30px rgba(255, 46, 99, 0.35);
+  box-shadow: 0 10px 30px rgba(229, 193, 88, 0.3);
   transition: transform 0.2s var(--ease-pop), background-position 0.4s ease, box-shadow 0.2s ease;
 }
 
 .primary-btn:hover {
   background-position: 100% center;
-  box-shadow: 0 14px 36px rgba(0, 229, 255, 0.4);
+  box-shadow: 0 14px 36px rgba(217, 219, 227, 0.35);
 }
 
 .primary-btn:active {
@@ -414,7 +404,7 @@ dialog {
   padding: 0;
   width: min(420px, 92vw);
   max-height: 85vh;
-  background: #14152a;
+  background: #111111;
   color: var(--text);
   border: 1px solid var(--panel-border);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
@@ -478,8 +468,8 @@ dialog::backdrop {
 
 .add-row input:focus {
   outline: none;
-  border-color: var(--neon-cyan);
-  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.2);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(229, 193, 88, 0.2);
 }
 
 .error {
@@ -500,7 +490,7 @@ dialog::backdrop {
 .text-btn {
   background: none;
   border: none;
-  color: var(--neon-cyan);
+  color: var(--gold);
   font-size: 0.85rem;
   cursor: pointer;
   padding: 4px;
@@ -533,7 +523,7 @@ dialog::backdrop {
 
 .actor-list li.custom .name::after {
   content: " •";
-  color: var(--neon-cyan);
+  color: var(--gold);
 }
 
 .remove-btn {
@@ -590,7 +580,6 @@ dialog::backdrop {
 
   .orb,
   .spotlight,
-  .avatar-ring,
   .marquee-title,
   .clapper,
   .btn-icon {

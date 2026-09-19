@@ -250,6 +250,10 @@ const DEFAULT_ACTORS = [
   "Daisy Ridley",
   "Oscar Isaac",
   "Rebecca Ferguson",
+  "Adam Driver",
+  "Brie Larson",
+  "Chris Hemsworth",
+  "Elizabeth Olsen",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

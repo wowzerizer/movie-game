@@ -258,6 +258,8 @@ const DEFAULT_ACTORS = [
   "Hannah Waddingham",
   "Robert Pattinson",
   "Catherine O'Hara",
+  "Hugh Bonneville",
+  "Cillian Murphy",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

@@ -7,12 +7,16 @@
 
   const slots = [
     {
+      rootEl: document.getElementById("slot-el-1"),
+      avatarEl: document.getElementById("avatar-1"),
       actorEl: document.getElementById("actor-1"),
       photoEl: document.getElementById("photo-1"),
       initialsEl: document.getElementById("initials-1"),
       requestId: 0,
     },
     {
+      rootEl: document.getElementById("slot-el-2"),
+      avatarEl: document.getElementById("avatar-2"),
       actorEl: document.getElementById("actor-2"),
       photoEl: document.getElementById("photo-2"),
       initialsEl: document.getElementById("initials-2"),
@@ -21,8 +25,10 @@
   ];
 
   const getActorsBtn = document.getElementById("get-actors");
+  const vsBadge = document.getElementById("vs-badge");
   const manageBtn = document.getElementById("manage-btn");
   const manageDialog = document.getElementById("manage-dialog");
+  const manageForm = document.getElementById("manage-form");
   const newActorInput = document.getElementById("new-actor-name");
   const addActorBtn = document.getElementById("add-actor-btn");
   const addError = document.getElementById("add-error");
@@ -137,7 +143,48 @@
     return url;
   }
 
+  // Restarts a CSS animation on `el` by toggling `className` off and back on
+  // across a forced reflow (animations don't replay just by re-adding a
+  // class that's already present).
+  function replayAnimation(el, className) {
+    el.classList.remove(className);
+    void el.offsetWidth;
+    el.classList.add(className);
+  }
+
+  function burstSparks(originEl) {
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const spark = document.createElement("span");
+      spark.className = "spark";
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
+      const distance = 28 + Math.random() * 22;
+      spark.style.setProperty("--spark-x", `${Math.cos(angle) * distance}px`);
+      spark.style.setProperty("--spark-y", `${Math.sin(angle) * distance}px`);
+      spark.style.background = i % 2 === 0 ? "var(--neon-gold)" : "var(--neon-cyan)";
+      originEl.appendChild(spark);
+      spark.addEventListener("animationend", () => spark.remove());
+    }
+  }
+
+  function addRippleEffect(button) {
+    button.addEventListener("click", (e) => {
+      const rect = button.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 1.4;
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      ripple.style.width = ripple.style.height = `${size}px`;
+      const x = e.clientX ? e.clientX - rect.left : rect.width / 2;
+      const y = e.clientY ? e.clientY - rect.top : rect.height / 2;
+      ripple.style.left = `${x - size / 2}px`;
+      ripple.style.top = `${y - size / 2}px`;
+      button.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove());
+    });
+  }
+
   function setSlotName(slot, name) {
+    slot.avatarEl.classList.remove("loading");
     slot.actorEl.textContent = name;
     slot.photoEl.hidden = true;
     slot.photoEl.removeAttribute("src");
@@ -147,6 +194,7 @@
 
   function setSlotEmpty(slot, text) {
     slot.requestId += 1; // invalidate any in-flight photo fetch for this slot
+    slot.avatarEl.classList.remove("loading");
     slot.actorEl.textContent = text;
     slot.photoEl.hidden = true;
     slot.photoEl.removeAttribute("src");
@@ -156,20 +204,29 @@
 
   function showActorInSlot(slot, name) {
     setSlotName(slot, name);
+    replayAnimation(slot.rootEl, "reveal");
+    slot.avatarEl.classList.add("loading");
 
     const requestId = ++slot.requestId;
     fetchActorImage(name).then((url) => {
       // A newer pair may have been requested while this fetch was in
       // flight - ignore stale results so photos never land in the wrong slot.
-      if (slot.requestId !== requestId || !url) return;
+      if (slot.requestId !== requestId) return;
+
+      if (!url) {
+        slot.avatarEl.classList.remove("loading");
+        return;
+      }
 
       slot.photoEl.onload = () => {
         slot.photoEl.hidden = false;
         slot.initialsEl.hidden = true;
+        slot.avatarEl.classList.remove("loading");
       };
       slot.photoEl.onerror = () => {
         slot.photoEl.hidden = true;
         slot.initialsEl.hidden = false;
+        slot.avatarEl.classList.remove("loading");
       };
       slot.photoEl.alt = name;
       slot.photoEl.src = url;
@@ -177,6 +234,9 @@
   }
 
   function showNewPair() {
+    replayAnimation(vsBadge, "pop");
+    burstSparks(vsBadge);
+
     const pair = pickPair();
     if (!pair) {
       setSlotEmpty(slots[0], "Add some actors first");
@@ -257,6 +317,17 @@
     renderActorList();
   }
 
+  function closeDialogAnimated() {
+    if (manageDialog.classList.contains("closing")) return;
+    manageDialog.classList.add("closing");
+    const onEnd = () => {
+      manageDialog.classList.remove("closing");
+      manageDialog.close();
+      manageDialog.removeEventListener("animationend", onEnd);
+    };
+    manageDialog.addEventListener("animationend", onEnd);
+  }
+
   getActorsBtn.addEventListener("click", showNewPair);
 
   manageBtn.addEventListener("click", () => {
@@ -264,6 +335,16 @@
     addError.textContent = "";
     newActorInput.value = "";
     manageDialog.showModal();
+  });
+
+  manageForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    closeDialogAnimated();
+  });
+
+  manageDialog.addEventListener("cancel", (e) => {
+    e.preventDefault();
+    closeDialogAnimated();
   });
 
   addActorBtn.addEventListener("click", addActor);
@@ -275,6 +356,9 @@
   });
 
   resetBtn.addEventListener("click", resetToDefaults);
+
+  addRippleEffect(getActorsBtn);
+  addRippleEffect(addActorBtn);
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {

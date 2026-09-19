@@ -11,6 +11,7 @@ ability to add your own actors to the list right from the app.
 - Random actor pair generator (never picks the same actor twice in a pair)
 - Add / remove actors, stored in your browser's `localStorage`
 - Actor headshots, looked up live from Wikipedia (see below)
+- A clapperboard loading animation while a new pair is revealed
 - Installable PWA (manifest + service worker) with offline support
 - No build step, no backend — plain HTML/CSS/JS
 
@@ -48,3 +49,10 @@ from the domain root or a `/<repo-name>/` subpath.
   only ever looked up once per browser and photos keep working offline
   after that. If no photo is found (or the device is offline), the app
   falls back to a circle with the actor's initials.
+- The "New Pair" loading animation is rendered with
+  [lottie-web](https://github.com/airbnb/lottie-web) (MIT license), vendored
+  at `js/vendor/lottie-light.min.js` (the SVG-only build, since the
+  animation has no expressions or embedded images). The clip itself lives
+  at `assets/movie-loading.json`. It plays forward then in reverse each
+  time a new pair is picked, giving actor photos a moment to load
+  underneath before the reveal.

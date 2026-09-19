@@ -254,6 +254,8 @@ const DEFAULT_ACTORS = [
   "Brie Larson",
   "Chris Hemsworth",
   "Elizabeth Olsen",
+  "Jason Sudeikis",
+  "Hannah Waddingham",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

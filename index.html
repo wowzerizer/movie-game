@@ -19,9 +19,21 @@
 
 <main>
   <section class="card" aria-live="polite">
-    <p class="actor" id="actor-1">Tap "New Pair" to start</p>
+    <div class="actor-slot">
+      <div class="avatar" id="avatar-1">
+        <span class="initials" id="initials-1"></span>
+        <img class="photo" id="photo-1" alt="" hidden>
+      </div>
+      <p class="actor" id="actor-1">Tap "New Pair" to start</p>
+    </div>
     <div class="connector" aria-hidden="true">⇄</div>
-    <p class="actor" id="actor-2">&nbsp;</p>
+    <div class="actor-slot">
+      <div class="avatar" id="avatar-2">
+        <span class="initials" id="initials-2"></span>
+        <img class="photo" id="photo-2" alt="" hidden>
+      </div>
+      <p class="actor" id="actor-2">&nbsp;</p>
+    </div>
   </section>
 
   <button id="get-actors" class="primary-btn" type="button">New Pair</button>

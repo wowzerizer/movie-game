@@ -10,6 +10,7 @@ ability to add your own actors to the list right from the app.
 
 - Random actor pair generator (never picks the same actor twice in a pair)
 - Add / remove actors, stored in your browser's `localStorage`
+- Actor headshots, looked up live from Wikipedia (see below)
 - Installable PWA (manifest + service worker) with offline support
 - No build step, no backend — plain HTML/CSS/JS
 
@@ -40,3 +41,10 @@ from the domain root or a `/<repo-name>/` subpath.
   so they won't sync across devices — this keeps the app fully static and
   free to host.
 - The starter list (`js/actors.js`) is carried over from the original app.
+- Actor photos are fetched client-side from Wikipedia's free public API
+  (`en.wikipedia.org/api/rest_v1/page/summary/...`), no key required. Each
+  lookup result (including "no photo found") is cached in `localStorage`
+  and the image itself is cached by the service worker, so an actor is
+  only ever looked up once per browser and photos keep working offline
+  after that. If no photo is found (or the device is offline), the app
+  falls back to a circle with the actor's initials.

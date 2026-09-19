@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#3e4eb8">
+<meta name="theme-color" content="#0b0d1a">
 <meta name="description" content="Movie Connect: get two random actors and try to link them through movies.">
 <title>Movie Connect</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -12,37 +12,55 @@
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<div class="bg-fx" aria-hidden="true">
+  <span class="orb orb-a"></span>
+  <span class="orb orb-b"></span>
+  <span class="orb orb-c"></span>
+</div>
+
 <header class="app-bar">
-  <h1>🎬 Movie Connect</h1>
+  <h1 class="marquee-title"><span class="clapper" aria-hidden="true">🎬</span> Movie Connect</h1>
   <button id="manage-btn" class="icon-btn" type="button" aria-label="Manage actor list" title="Manage actor list">⚙️</button>
 </header>
 
 <main>
-  <section class="card" aria-live="polite">
-    <div class="actor-slot">
-      <div class="avatar" id="avatar-1">
-        <span class="initials" id="initials-1"></span>
-        <img class="photo" id="photo-1" alt="" hidden>
+  <section class="card" id="game-card" aria-live="polite">
+    <div class="spotlight" aria-hidden="true"></div>
+
+    <div class="actor-slot" id="slot-el-1">
+      <div class="avatar-ring">
+        <div class="avatar" id="avatar-1">
+          <span class="initials" id="initials-1"></span>
+          <img class="photo" id="photo-1" alt="" hidden>
+        </div>
       </div>
       <p class="actor" id="actor-1">Tap "New Pair" to start</p>
     </div>
-    <div class="connector" aria-hidden="true">⇄</div>
-    <div class="actor-slot">
-      <div class="avatar" id="avatar-2">
-        <span class="initials" id="initials-2"></span>
-        <img class="photo" id="photo-2" alt="" hidden>
+
+    <div class="vs-badge" id="vs-badge" aria-hidden="true">
+      <span class="vs-text">VS</span>
+    </div>
+
+    <div class="actor-slot" id="slot-el-2">
+      <div class="avatar-ring">
+        <div class="avatar" id="avatar-2">
+          <span class="initials" id="initials-2"></span>
+          <img class="photo" id="photo-2" alt="" hidden>
+        </div>
       </div>
       <p class="actor" id="actor-2">&nbsp;</p>
     </div>
   </section>
 
-  <button id="get-actors" class="primary-btn" type="button">New Pair</button>
+  <button id="get-actors" class="primary-btn" type="button">
+    <span class="btn-icon" aria-hidden="true">🔀</span> New Pair
+  </button>
 
   <p class="hint">Connect the two actors through a chain of shared movies.</p>
 </main>
 
 <dialog id="manage-dialog">
-  <form method="dialog" class="manage-form">
+  <form method="dialog" class="manage-form" id="manage-form">
     <h2>Manage Actors</h2>
 
     <div class="add-row">

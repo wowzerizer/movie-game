@@ -260,6 +260,7 @@ const DEFAULT_ACTORS = [
   "Catherine O'Hara",
   "Hugh Bonneville",
   "Cillian Murphy",
+  "Jim Broadbent",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

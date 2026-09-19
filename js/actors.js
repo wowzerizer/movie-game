@@ -256,6 +256,7 @@ const DEFAULT_ACTORS = [
   "Elizabeth Olsen",
   "Jason Sudeikis",
   "Hannah Waddingham",
+  "Robert Pattinson",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

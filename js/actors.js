@@ -236,6 +236,10 @@ const DEFAULT_ACTORS = [
   "Jeff Goldblum",
   "Martin Freeman",
   "Domhnall Gleeson",
+  "Timothée Chalamet",
+  "Tom Holland",
+  "Zendaya",
+  "Millie Bobby Brown",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

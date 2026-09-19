@@ -240,6 +240,7 @@ const DEFAULT_ACTORS = [
   "Tom Holland",
   "Zendaya",
   "Millie Bobby Brown",
+  "Jenna Ortega",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

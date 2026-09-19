@@ -24,8 +24,13 @@
     },
   ];
 
+  const LOADING_ANIMATION_PATH = "assets/movie-loading.json";
+  const LOADING_ANIMATION_SPEED = 4; // plays the 4s source clip at 1s per direction (2s round trip)
+
   const getActorsBtn = document.getElementById("get-actors");
   const vsBadge = document.getElementById("vs-badge");
+  const loadingOverlay = document.getElementById("loading-overlay");
+  const lottieBox = document.getElementById("lottie-box");
   const manageBtn = document.getElementById("manage-btn");
   const manageDialog = document.getElementById("manage-dialog");
   const manageForm = document.getElementById("manage-form");
@@ -233,7 +238,63 @@
     });
   }
 
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let lottieAnim = null;
+
+  function getLottieAnim() {
+    if (lottieAnim || typeof window.lottie === "undefined") return lottieAnim;
+    lottieAnim = window.lottie.loadAnimation({
+      container: lottieBox,
+      renderer: "svg",
+      loop: false,
+      autoplay: false,
+      path: LOADING_ANIMATION_PATH,
+    });
+    lottieAnim.setSpeed(LOADING_ANIMATION_SPEED);
+    return lottieAnim;
+  }
+
+  function waitForComplete(anim) {
+    return new Promise((resolve) => {
+      function onComplete() {
+        anim.removeEventListener("complete", onComplete);
+        resolve();
+      }
+      anim.addEventListener("complete", onComplete);
+    });
+  }
+
+  // Shows the Lottie clip over the card as a loading bumper: plays forward,
+  // then plays the same clip in reverse back to frame 0, then hides again.
+  // Restarting the same anim instance mid-flight (e.g. from overlapping
+  // calls) leaves it in a state where the reverse phase's "complete" event
+  // never fires, so overlap is prevented at the call site instead (the
+  // "New Pair" button is disabled for the duration - see showNewPair).
+  async function playLoadingBumper() {
+    const anim = getLottieAnim();
+    if (!anim || prefersReducedMotion) return;
+
+    loadingOverlay.classList.add("active");
+
+    anim.setDirection(1);
+    anim.goToAndPlay(0, true);
+    await waitForComplete(anim);
+
+    anim.setDirection(-1);
+    anim.play();
+    await waitForComplete(anim);
+
+    loadingOverlay.classList.remove("active");
+  }
+
   function showNewPair() {
+    if (getActorsBtn.disabled) return;
+    getActorsBtn.disabled = true;
+    playLoadingBumper().finally(() => {
+      getActorsBtn.disabled = false;
+    });
+
     replayAnimation(vsBadge, "pop");
     burstSparks(vsBadge);
 

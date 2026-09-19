@@ -1,10 +1,12 @@
-const CACHE_NAME = "movie-connect-v2";
+const CACHE_NAME = "movie-connect-v3";
 const ASSETS = [
   "./",
   "index.html",
   "css/styles.css",
   "js/actors.js",
   "js/app.js",
+  "js/vendor/lottie-light.min.js",
+  "assets/movie-loading.json",
   "manifest.webmanifest",
   "icons/icon-192.png",
   "icons/icon-512.png",

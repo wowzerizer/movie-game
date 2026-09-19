@@ -241,6 +241,11 @@ const DEFAULT_ACTORS = [
   "Zendaya",
   "Millie Bobby Brown",
   "Jenna Ortega",
+  "Pedro Pascal",
+  "Florence Pugh",
+  "Anya Taylor-Joy",
+  "Austin Butler",
+  "Ana de Armas",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

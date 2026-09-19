@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3e4eb8">
+<meta name="description" content="Movie Connect: get two random actors and try to link them through movies.">
+<title>Movie Connect</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="app-bar">
+  <h1>🎬 Movie Connect</h1>
+  <button id="manage-btn" class="icon-btn" type="button" aria-label="Manage actor list" title="Manage actor list">⚙️</button>
+</header>
+
+<main>
+  <section class="card" aria-live="polite">
+    <div class="actor-slot">
+      <div class="avatar" id="avatar-1">
+        <span class="initials" id="initials-1"></span>
+        <img class="photo" id="photo-1" alt="" hidden>
+      </div>
+      <p class="actor" id="actor-1">Tap "New Pair" to start</p>
+    </div>
+    <div class="connector" aria-hidden="true">⇄</div>
+    <div class="actor-slot">
+      <div class="avatar" id="avatar-2">
+        <span class="initials" id="initials-2"></span>
+        <img class="photo" id="photo-2" alt="" hidden>
+      </div>
+      <p class="actor" id="actor-2">&nbsp;</p>
+    </div>
+  </section>
+
+  <button id="get-actors" class="primary-btn" type="button">New Pair</button>
+
+  <p class="hint">Connect the two actors through a chain of shared movies.</p>
+</main>
+
+<dialog id="manage-dialog">
+  <form method="dialog" class="manage-form">
+    <h2>Manage Actors</h2>
+
+    <div class="add-row">
+      <label for="new-actor-name" class="sr-only">Actor name</label>
+      <input id="new-actor-name" type="text" placeholder="Add an actor, e.g. Zendaya" autocomplete="off">
+      <button id="add-actor-btn" class="primary-btn small" type="button">Add</button>
+    </div>
+    <p id="add-error" class="error" role="alert"></p>
+
+    <div class="list-header">
+      <span id="actor-count">0 actors</span>
+      <button id="reset-btn" class="text-btn" type="button">Reset to defaults</button>
+    </div>
+
+    <ul id="actor-list" class="actor-list"></ul>
+
+    <div class="dialog-actions">
+      <button value="close" class="primary-btn" type="submit">Done</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="js/actors.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

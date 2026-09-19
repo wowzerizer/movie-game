@@ -246,6 +246,10 @@ const DEFAULT_ACTORS = [
   "Anya Taylor-Joy",
   "Austin Butler",
   "Ana de Armas",
+  "Jason Momoa",
+  "Daisy Ridley",
+  "Oscar Isaac",
+  "Rebecca Ferguson",
 ];
 
 if (typeof module !== "undefined" && module.exports) {

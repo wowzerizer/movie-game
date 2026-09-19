@@ -271,7 +271,7 @@
         removeBtn.type = "button";
         removeBtn.className = "remove-btn";
         removeBtn.setAttribute("aria-label", `Remove ${item.name}`);
-        removeBtn.textContent = "✕";
+        removeBtn.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>';
         removeBtn.addEventListener("click", () => removeCustomActor(item.name));
         li.appendChild(removeBtn);
       }

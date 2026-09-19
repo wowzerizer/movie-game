@@ -120,33 +120,59 @@ body {
   to { background-position: 300% center; }
 }
 
-.clapper {
-  display: inline-block;
-  animation: clapper-tap 3.5s ease-in-out infinite;
+/* Shared inline-icon sizing/stroke. Icons are referenced from the sprite
+   defined at the top of <body> via <use>; SVG inherits fill/stroke through
+   a <use> the same way it would through a normal parent element, so this
+   is the one place that sets the default look for every icon. Individual
+   shapes inside a symbol (reel holes, settings knobs) set their own solid
+   fill to override this where needed. */
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
 }
 
-@keyframes clapper-tap {
-  0%, 80%, 100% { transform: rotate(0deg); }
-  85% { transform: rotate(-18deg); }
-  90% { transform: rotate(4deg); }
-  95% { transform: rotate(-8deg); }
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon-title {
+  width: 1.15em;
+  height: 1.15em;
+  /* .marquee-title sets color: transparent for its text-clip gradient -
+     the icon needs its own real color since it reads currentColor too. */
+  color: var(--gold);
 }
 
 .icon-btn {
   background: transparent;
   border: none;
-  font-size: 1.4rem;
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
   line-height: 1;
-  color: #fff;
+  color: var(--silver);
   border-radius: 50%;
-  transition: transform 0.3s var(--ease-pop), background 0.2s ease;
+  transition: transform 0.3s var(--ease-pop), background 0.2s ease, color 0.2s ease;
+}
+
+.icon-btn .icon {
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
 .icon-btn:hover {
   background: rgba(255, 255, 255, 0.08);
-  transform: rotate(45deg);
+  color: var(--gold);
+  transform: scale(1.1);
 }
 
 main {
@@ -358,14 +384,12 @@ main {
   transform: scale(0.95);
 }
 
-.btn-icon {
-  display: inline-block;
-  animation: icon-spin-idle 4s linear infinite;
+.icon-refresh {
+  transition: transform 0.4s var(--ease-pop);
 }
 
-@keyframes icon-spin-idle {
-  0%, 85%, 100% { transform: rotate(0deg); }
-  92% { transform: rotate(180deg); }
+.primary-btn:hover .icon-refresh {
+  transform: rotate(180deg);
 }
 
 .ripple {
@@ -580,9 +604,11 @@ dialog::backdrop {
 
   .orb,
   .spotlight,
-  .marquee-title,
-  .clapper,
-  .btn-icon {
+  .marquee-title {
     animation: none !important;
+  }
+
+  .primary-btn:hover .icon-refresh {
+    transform: none;
   }
 }

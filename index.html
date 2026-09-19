@@ -12,6 +12,34 @@
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<svg class="icon-sprite" aria-hidden="true" focusable="false">
+  <symbol id="icon-reel" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"></circle>
+    <circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none"></circle>
+    <circle cx="12" cy="5.7" r="1.5" fill="currentColor" stroke="none"></circle>
+    <circle cx="17.5" cy="9.4" r="1.5" fill="currentColor" stroke="none"></circle>
+    <circle cx="15.4" cy="15.9" r="1.5" fill="currentColor" stroke="none"></circle>
+    <circle cx="8.6" cy="15.9" r="1.5" fill="currentColor" stroke="none"></circle>
+    <circle cx="6.5" cy="9.4" r="1.5" fill="currentColor" stroke="none"></circle>
+  </symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24">
+    <line x1="4" y1="7" x2="20" y2="7"></line>
+    <circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"></circle>
+    <line x1="4" y1="12" x2="20" y2="12"></line>
+    <circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"></circle>
+    <line x1="4" y1="17" x2="20" y2="17"></line>
+    <circle cx="11" cy="17" r="2" fill="currentColor" stroke="none"></circle>
+  </symbol>
+  <symbol id="icon-refresh" viewBox="0 0 24 24">
+    <path d="M20 11A8 8 0 1 0 17.4 17.1"></path>
+    <polyline points="20 4 20 11 13 11"></polyline>
+  </symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <line x1="5" y1="5" x2="19" y2="19"></line>
+    <line x1="19" y1="5" x2="5" y2="19"></line>
+  </symbol>
+</svg>
+
 <div class="bg-fx" aria-hidden="true">
   <span class="orb orb-a"></span>
   <span class="orb orb-b"></span>
@@ -19,8 +47,13 @@
 </div>
 
 <header class="app-bar">
-  <h1 class="marquee-title"><span class="clapper" aria-hidden="true">🎬</span> Movie Connect</h1>
-  <button id="manage-btn" class="icon-btn" type="button" aria-label="Manage actor list" title="Manage actor list">⚙️</button>
+  <h1 class="marquee-title">
+    <svg class="icon icon-title" aria-hidden="true"><use href="#icon-reel"></use></svg>
+    Movie Connect
+  </h1>
+  <button id="manage-btn" class="icon-btn" type="button" aria-label="Manage actor list" title="Manage actor list">
+    <svg class="icon" aria-hidden="true"><use href="#icon-settings"></use></svg>
+  </button>
 </header>
 
 <main>
@@ -53,7 +86,8 @@
   </section>
 
   <button id="get-actors" class="primary-btn" type="button">
-    <span class="btn-icon" aria-hidden="true">🔀</span> New Pair
+    <svg class="icon icon-refresh" aria-hidden="true"><use href="#icon-refresh"></use></svg>
+    New Pair
   </button>
 
   <p class="hint">Connect the two actors through a chain of shared movies.</p>
